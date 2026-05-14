@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gem Columns</title>
+    <link rel="stylesheet" href="./gameboy.css" />
+  </head>
+  <body>
+    <main class="layout d-grid">
+      <section class="cabinet d-grid panel border box-shadow d-grid">
+        <section class="hud d-flex">
+          <div class="stats d-grid">
+            <div class="stat inset border box-shadow d-flex">
+              <span class="label text-m">Score</span>
+              <strong id="score" class="text-m dark">0</strong>
+            </div>
+            <div class="stat inset border box-shadow d-flex">
+              <span class="label text-m">Level</span>
+              <strong id="level" class="text-m dark">1</strong>
+            </div>
+            <div class="stat inset border box-shadow d-flex">
+              <span class="label text-m">Gems</span>
+              <strong id="clears" class="text-m dark">0</strong>
+            </div>
+          </div>
+
+          <div class="preview inset border box-shadow">
+            <span class="label text-m">Next</span>
+            <div
+              id="next-piece"
+              class="next-piece d-flex"
+              aria-label="Next piece preview"
+            ></div>
+          </div>
+        </section>
+
+        <section class="board-shell d-grid p-relative">
+          <canvas
+            class="box-shadow d-block p-relative"
+            id="game"
+            width="360"
+            height="780"
+            aria-label="Columns style game board"
+          ></canvas>
+          <div id="overlay" class="overlay text-center d-grid hidden border" aria-live="polite"></div>
+        </section>
+
+        <section class="hud d-flex">
+          <div class="controls inset border box-shadow">
+            <span class="label text-m">Controls</span>
+            <ul class="d-grid">
+              <li><span class="control-keys"><kbd>←</kbd><kbd>→</kbd></span><span class="control-action">Move</span></li>
+              <li><span class="control-keys"><kbd>↑</kbd></span><span class="control-action">Reorder</span></li>
+              <li><span class="control-keys"><kbd>↓</kbd></span><span class="control-action">Soft drop</span></li>
+              <li><span class="control-keys"><kbd>Space</kbd></span><span class="control-action">Hard drop</span></li>
+              <li><span class="control-keys"><kbd>P</kbd></span><span class="control-action">Pause</span></li>
+              <li><span class="control-keys"><kbd>R</kbd></span><span class="control-action">Restart</span></li>
+            </ul>
+            <button
+              id="music-toggle"
+              class="music-toggle overlay-button box-shadow"
+              type="button"
+            >
+              Mute Music
+            </button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

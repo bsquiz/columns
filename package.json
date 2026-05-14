@@ -1,0 +1,16 @@
+{
+  "name": "columns-clone",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A browser-based Columns-style puzzle game clone.",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "jest": "^30.3.0",
+    "typescript": "^6.0.3"
+  }
+}
