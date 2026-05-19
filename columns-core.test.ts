@@ -1,15 +1,15 @@
-const {
+import {
+  clearMarkedMatches,
   createBoard,
   createCell,
   createPiece,
-  randomColor,
-  rotateGems,
+  findMatches,
   isValidPosition,
   lockPiece,
-  findMatches,
   markMatches,
-  clearMarkedMatches,
-} = require("./columns-core");
+  randomColor,
+  rotateGems,
+} from "./columns-core";
 
 describe("columns core", () => {
   test("creates a board with the expected dimensions", () => {
@@ -124,9 +124,9 @@ describe("columns core", () => {
     const matches = findMatches(board);
     markMatches(board, matches);
 
-    expect(board[10][0].clearing).toBe(true);
-    expect(board[11][0].clearing).toBe(true);
-    expect(board[12][0].clearing).toBe(true);
+    expect(board[10][0]?.clearing).toBe(true);
+    expect(board[11][0]?.clearing).toBe(true);
+    expect(board[12][0]?.clearing).toBe(true);
 
     const { removed } = clearMarkedMatches(board, matches);
 

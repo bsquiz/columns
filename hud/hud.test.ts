@@ -1,4 +1,4 @@
-const { createHud } = require("./hud");
+import { createHud } from "./hud";
 
 describe("hud", () => {
   function createTextElement() {
@@ -8,8 +8,8 @@ describe("hud", () => {
   function createNextPieceContainer() {
     return {
       innerHTML: "stale",
-      children: [],
-      appendChild(child) {
+      children: [] as Array<{ className: string; width: number; height: number }>,
+      appendChild(child: { className: string; width: number; height: number }) {
         this.children.push(child);
       },
     };
@@ -17,7 +17,7 @@ describe("hud", () => {
 
   beforeEach(() => {
     global.document = {
-      createElement(tagName) {
+      createElement(tagName: string) {
         return {
           tagName,
           className: "",
@@ -25,7 +25,7 @@ describe("hud", () => {
           height: 0,
         };
       },
-    };
+    } as Document;
   });
 
   afterEach(() => {
@@ -45,7 +45,7 @@ describe("hud", () => {
       drawPreviewGem: jest.fn(),
     });
 
-    boundHud.renderStats({ score: 123, level: 4, clears: 18 });
+    boundHud.renderStats({ score: 123, level: 4, clears: 18 } as never);
 
     expect(scoreEl.textContent).toBe("123");
     expect(levelEl.textContent).toBe("4");
@@ -64,7 +64,7 @@ describe("hud", () => {
       drawPreviewGem,
     });
 
-    hud.renderNextPiece({ gems: ["ruby", "jade", "gold"] });
+    hud.renderNextPiece({ gems: ["ruby", "jade", "gold"] } as never);
 
     expect(nextPieceEl.innerHTML).toBe("");
     expect(nextPieceEl.children).toHaveLength(3);

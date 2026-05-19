@@ -1,4 +1,4 @@
-const { createHighScoreService } = require("./highScores");
+import { createHighScoreService } from "./highScores";
 
 describe("high score service", () => {
   const text = {
@@ -10,10 +10,10 @@ describe("high score service", () => {
     const store = new Map();
 
     return {
-      getItem(key) {
+      getItem(key: string) {
         return store.has(key) ? store.get(key) : null;
       },
-      setItem(key, value) {
+      setItem(key: string, value: string) {
         store.set(key, String(value));
       },
       clear() {
@@ -31,7 +31,7 @@ describe("high score service", () => {
   }
 
   beforeEach(() => {
-    global.window = { localStorage: createStorage() };
+    global.window = { localStorage: createStorage() } as Window & typeof globalThis;
   });
 
   afterEach(() => {

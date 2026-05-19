@@ -223,64 +223,103 @@ export const AUDIO = {
     melodyType: "triangle",
     bassType: "sine",
     sectionOrder: ["A", "B", "C"],
-    sections: {
-      A: {
-        melody: [
-          { beat: 0, frequency: 659.25, durationBeats: 1 },
-          { beat: 1, frequency: 783.99, durationBeats: 1 },
-          { beat: 2, frequency: 880, durationBeats: 1 },
-          { beat: 3, frequency: 783.99, durationBeats: 1 },
-          { beat: 4, frequency: 698.46, durationBeats: 1 },
-          { beat: 5, frequency: 783.99, durationBeats: 1 },
-          { beat: 6, frequency: 880, durationBeats: 1 },
-          { beat: 7, frequency: 987.77, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 164.81, durationBeats: 2 },
-          { beat: 2, frequency: 196, durationBeats: 2 },
-          { beat: 4, frequency: 174.61, durationBeats: 2 },
-          { beat: 6, frequency: 146.83, durationBeats: 2 },
-        ],
-      },
-      B: {
-        melody: [
-          { beat: 0, frequency: 587.33, durationBeats: 1 },
-          { beat: 1, frequency: 659.25, durationBeats: 1 },
-          { beat: 2, frequency: 698.46, durationBeats: 1 },
-          { beat: 3, frequency: 783.99, durationBeats: 1 },
-          { beat: 4, frequency: 880, durationBeats: 1 },
-          { beat: 5, frequency: 783.99, durationBeats: 1 },
-          { beat: 6, frequency: 698.46, durationBeats: 1 },
-          { beat: 7, frequency: 659.25, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 146.83, durationBeats: 2 },
-          { beat: 2, frequency: 174.61, durationBeats: 2 },
-          { beat: 4, frequency: 196, durationBeats: 2 },
-          { beat: 6, frequency: 164.81, durationBeats: 2 },
-        ],
-      },
-      C: {
-        melody: [
-          { beat: 0, frequency: 880, durationBeats: 0.5 },
-          { beat: 0.5, frequency: 987.77, durationBeats: 0.5 },
-          { beat: 1, frequency: 1046.5, durationBeats: 1 },
-          { beat: 2, frequency: 987.77, durationBeats: 0.5 },
-          { beat: 2.5, frequency: 880, durationBeats: 0.5 },
-          { beat: 3, frequency: 783.99, durationBeats: 1 },
-          { beat: 4, frequency: 698.46, durationBeats: 1 },
-          { beat: 5, frequency: 783.99, durationBeats: 1 },
-          { beat: 6, frequency: 880, durationBeats: 1 },
-          { beat: 7, frequency: 698.46, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 220, durationBeats: 2 },
-          { beat: 2, frequency: 196, durationBeats: 2 },
-          { beat: 4, frequency: 174.61, durationBeats: 2 },
-          { beat: 6, frequency: 164.81, durationBeats: 2 },
-        ],
-      },
-    },
+
+sections: {
+  A: {
+    melody: [
+      { beat: 0, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 0.5, frequency: 739.99, durationBeats: 0.5 }, // F#5
+      { beat: 1, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 1.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 2, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 2.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 3, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 3.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+
+      { beat: 4, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 4.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 5, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 5.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 6, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 6.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 7, frequency: 830.61, durationBeats: 0.5 }, // G#5
+      { beat: 7.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+    ],
+    bass: [
+      { beat: 0, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 1, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 2, frequency: 130.81, durationBeats: 1 }, // C3
+      { beat: 3, frequency: 123.47, durationBeats: 1 }, // B2
+      { beat: 4, frequency: 110.0, durationBeats: 1 }, // A2
+      { beat: 5, frequency: 123.47, durationBeats: 1 }, // B2
+      { beat: 6, frequency: 130.81, durationBeats: 1 }, // C3
+      { beat: 7, frequency: 146.83, durationBeats: 1 }, // D3
+    ],
+  },
+
+  B: {
+    melody: [
+      { beat: 0, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 0.5, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 1, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 1.5, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 2, frequency: 880.0, durationBeats: 1 }, // A5
+      { beat: 3, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 3.5, frequency: 739.99, durationBeats: 0.5 }, // F#5
+
+      { beat: 4, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 4.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 5.5, frequency: 1046.5, durationBeats: 0.5 }, // C6
+      { beat: 6, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 6.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 7, frequency: 830.61, durationBeats: 0.5 }, // G#5
+      { beat: 7.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+    ],
+    bass: [
+      { beat: 0, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 1, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 2, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 3, frequency: 185.0, durationBeats: 1 }, // F#3
+      { beat: 4, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 5, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 6, frequency: 123.47, durationBeats: 1 }, // B2
+      { beat: 7, frequency: 110.0, durationBeats: 1 }, // A2
+    ],
+  },
+
+  C: {
+    melody: [
+      { beat: 0, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 0.5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 1, frequency: 1046.5, durationBeats: 0.5 }, // C6
+      { beat: 1.5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 2, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 2.5, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 3, frequency: 698.46, durationBeats: 1 }, // F5
+
+      { beat: 4, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 4.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 5.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 6, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 6.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 7, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 7.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+    ],
+    bass: [
+      { beat: 0, frequency: 220.0, durationBeats: 1 }, // A3
+      { beat: 1, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 2, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 3, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 4, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 5, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 6, frequency: 185.0, durationBeats: 1 }, // F#3
+      { beat: 7, frequency: 196.0, durationBeats: 1 }, // G3
+    ],
+  },
+},
+
   },
   alternateMusic: {
     bpm: 116,
@@ -292,63 +331,103 @@ export const AUDIO = {
     melodyType: "triangle",
     bassType: "sine",
     sectionOrder: ["A", "B", "C"],
-    sections: {
-      A: {
-        melody: [
-          { beat: 0, frequency: 523.25, durationBeats: 1 },
-          { beat: 1, frequency: 587.33, durationBeats: 1 },
-          { beat: 2, frequency: 659.25, durationBeats: 1 },
-          { beat: 3, frequency: 783.99, durationBeats: 1 },
-          { beat: 4, frequency: 659.25, durationBeats: 1 },
-          { beat: 5, frequency: 587.33, durationBeats: 1 },
-          { beat: 6, frequency: 523.25, durationBeats: 1 },
-          { beat: 7, frequency: 587.33, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 130.81, durationBeats: 2 },
-          { beat: 2, frequency: 164.81, durationBeats: 2 },
-          { beat: 4, frequency: 146.83, durationBeats: 2 },
-          { beat: 6, frequency: 174.61, durationBeats: 2 },
-        ],
-      },
-      B: {
-        melody: [
-          { beat: 0, frequency: 698.46, durationBeats: 1 },
-          { beat: 1, frequency: 783.99, durationBeats: 1 },
-          { beat: 2, frequency: 880, durationBeats: 1 },
-          { beat: 3, frequency: 783.99, durationBeats: 1 },
-          { beat: 4, frequency: 698.46, durationBeats: 1 },
-          { beat: 5, frequency: 659.25, durationBeats: 1 },
-          { beat: 6, frequency: 587.33, durationBeats: 1 },
-          { beat: 7, frequency: 659.25, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 146.83, durationBeats: 2 },
-          { beat: 2, frequency: 196, durationBeats: 2 },
-          { beat: 4, frequency: 174.61, durationBeats: 2 },
-          { beat: 6, frequency: 130.81, durationBeats: 2 },
-        ],
-      },
-      C: {
-        melody: [
-          { beat: 0, frequency: 783.99, durationBeats: 0.5 },
-          { beat: 0.5, frequency: 880, durationBeats: 0.5 },
-          { beat: 1, frequency: 987.77, durationBeats: 1 },
-          { beat: 2, frequency: 880, durationBeats: 0.5 },
-          { beat: 2.5, frequency: 783.99, durationBeats: 0.5 },
-          { beat: 3, frequency: 698.46, durationBeats: 1 },
-          { beat: 4, frequency: 659.25, durationBeats: 1 },
-          { beat: 5, frequency: 587.33, durationBeats: 1 },
-          { beat: 6, frequency: 659.25, durationBeats: 1 },
-          { beat: 7, frequency: 523.25, durationBeats: 1 },
-        ],
-        bass: [
-          { beat: 0, frequency: 196, durationBeats: 2 },
-          { beat: 2, frequency: 174.61, durationBeats: 2 },
-          { beat: 4, frequency: 164.81, durationBeats: 2 },
-          { beat: 6, frequency: 130.81, durationBeats: 2 },
-        ],
-      },
-    },
+
+sections: {
+  A: {
+    melody: [
+      { beat: 0, frequency: 523.25, durationBeats: 0.5 }, // C5
+      { beat: 0.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 1, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 1.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 2, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 2.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 3, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 3.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+
+      { beat: 4, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 4.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 5, frequency: 523.25, durationBeats: 0.5 }, // C5
+      { beat: 5.5, frequency: 493.88, durationBeats: 0.5 }, // B4
+      { beat: 6, frequency: 523.25, durationBeats: 0.5 }, // C5
+      { beat: 6.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 7, frequency: 493.88, durationBeats: 0.5 }, // B4
+      { beat: 7.5, frequency: 523.25, durationBeats: 0.5 }, // C5
+    ],
+    bass: [
+      { beat: 0, frequency: 130.81, durationBeats: 1 }, // C3
+      { beat: 1, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 2, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 3, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 4, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 5, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 6, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 7, frequency: 130.81, durationBeats: 1 }, // C3
+    ],
+  },
+
+  B: {
+    melody: [
+      { beat: 0, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 0.5, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 1, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 1.5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 2, frequency: 1046.5, durationBeats: 0.5 }, // C6
+      { beat: 2.5, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 3, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 3.5, frequency: 783.99, durationBeats: 0.5 }, // G5
+
+      { beat: 4, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 4.5, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 5.5, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 6, frequency: 698.46, durationBeats: 0.5 }, // F5
+      { beat: 6.5, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 7, frequency: 493.88, durationBeats: 0.5 }, // B4
+      { beat: 7.5, frequency: 523.25, durationBeats: 0.5 }, // C5
+    ],
+    bass: [
+      { beat: 0, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 1, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 2, frequency: 220.0, durationBeats: 1 }, // A3
+      { beat: 3, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 4, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 5, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 6, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 7, frequency: 130.81, durationBeats: 1 }, // C3
+    ],
+  },
+
+  C: {
+    melody: [
+      { beat: 0, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 0.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 1, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 1.5, frequency: 1046.5, durationBeats: 0.5 }, // C6
+      { beat: 2, frequency: 987.77, durationBeats: 0.5 }, // B5
+      { beat: 2.5, frequency: 880.0, durationBeats: 0.5 }, // A5
+      { beat: 3, frequency: 783.99, durationBeats: 0.5 }, // G5
+      { beat: 3.5, frequency: 698.46, durationBeats: 0.5 }, // F5
+
+      { beat: 4, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 4.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 5, frequency: 523.25, durationBeats: 0.5 }, // C5
+      { beat: 5.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 6, frequency: 659.25, durationBeats: 0.5 }, // E5
+      { beat: 6.5, frequency: 587.33, durationBeats: 0.5 }, // D5
+      { beat: 7, frequency: 493.88, durationBeats: 0.5 }, // B4
+      { beat: 7.5, frequency: 523.25, durationBeats: 0.5 }, // C5
+    ],
+    bass: [
+      { beat: 0, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 1, frequency: 220.0, durationBeats: 1 }, // A3
+      { beat: 2, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 3, frequency: 174.61, durationBeats: 1 }, // F3
+      { beat: 4, frequency: 164.81, durationBeats: 1 }, // E3
+      { beat: 5, frequency: 146.83, durationBeats: 1 }, // D3
+      { beat: 6, frequency: 196.0, durationBeats: 1 }, // G3
+      { beat: 7, frequency: 130.81, durationBeats: 1 }, // C3
+    ],
+  },
+},
   },
 };

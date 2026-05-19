@@ -1,4 +1,4 @@
-const { createOverlayController } = require("./overlays");
+import { createOverlayController } from "./overlays";
 
 describe("overlays", () => {
   const text = {
@@ -11,19 +11,21 @@ describe("overlays", () => {
     nameEntryTitle: "NEW HIGH SCORE",
     nameEntryBody: "Enter your name",
     nameEntryButton: "Save Score",
+    savingHighScoreTitle: "SAVING SCORE",
+    savingHighScoreBody: "Updating records...",
   };
 
-  function createClassList(initial = []) {
+  function createClassList(initial: string[] = []) {
     const classes = new Set(initial);
 
     return {
-      add(name) {
+      add(name: string) {
         classes.add(name);
       },
-      remove(name) {
+      remove(name: string) {
         classes.delete(name);
       },
-      toggle(name, force) {
+      toggle(name: string, force?: boolean) {
         if (force === undefined) {
           if (classes.has(name)) {
             classes.delete(name);
@@ -42,7 +44,7 @@ describe("overlays", () => {
         classes.delete(name);
         return false;
       },
-      contains(name) {
+      contains(name: string) {
         return classes.has(name);
       },
     };
@@ -51,10 +53,10 @@ describe("overlays", () => {
   function createInputElement(value = "") {
     return {
       value,
-      listeners: {},
+      listeners: {} as Record<string, (event?: { code?: string; preventDefault?: () => void }) => void>,
       focused: false,
       selected: false,
-      addEventListener(type, handler) {
+      addEventListener(type: string, handler: (event?: { code?: string; preventDefault?: () => void }) => void) {
         this.listeners[type] = handler;
       },
       focus() {
@@ -79,7 +81,7 @@ describe("overlays", () => {
 
   test("shows text overlays and toggles fullscreen state", () => {
     const overlayEl = createOverlayEl();
-    const overlays = createOverlayController({ overlayEl, text });
+    const overlays = createOverlayController({ overlayEl: overlayEl as never, text });
 
     overlays.showText("PAUSED\nNOW", { fullscreen: true });
 
@@ -90,7 +92,7 @@ describe("overlays", () => {
 
   test("hides the overlay and removes fullscreen state", () => {
     const overlayEl = createOverlayEl();
-    const overlays = createOverlayController({ overlayEl, text });
+    const overlays = createOverlayController({ overlayEl: overlayEl as never, text });
 
     overlays.showText("Test", { fullscreen: true });
     overlays.hide();
@@ -101,7 +103,7 @@ describe("overlays", () => {
 
   test("renders the start screen without a redundant start button", () => {
     const overlayEl = createOverlayEl();
-    const overlays = createOverlayController({ overlayEl, text });
+    const overlays = createOverlayController({ overlayEl: overlayEl as never, text });
 
     overlays.showStartScreen();
 
@@ -112,10 +114,10 @@ describe("overlays", () => {
 
   test("renders the game over screen with a high score table", () => {
     const overlayEl = createOverlayEl();
-    const overlays = createOverlayController({ overlayEl, text });
+    const overlays = createOverlayController({ overlayEl: overlayEl as never, text });
 
     overlays.showGameOverScreen(
-      { score: 250, level: 5, clears: 30 },
+      { score: 250, level: 5, clears: 30 } as never,
       [
         { name: "AAA", score: 250, level: 5, gems: 30 },
         { name: "BBB", score: 100, level: 2, gems: 12 },
@@ -132,8 +134,8 @@ describe("overlays", () => {
     const overlayEl = createOverlayEl();
     const input = createInputElement("abc");
     const saveButton = {
-      listeners: {},
-      addEventListener(type, handler) {
+      listeners: {} as Record<string, () => void>,
+      addEventListener(type: string, handler: () => void) {
         this.listeners[type] = handler;
       },
       click() {
@@ -143,7 +145,7 @@ describe("overlays", () => {
     const onSubmit = jest.fn();
     const normalizeName = jest.fn((value) => value.toUpperCase());
     global.document = {
-      getElementById(id) {
+      getElementById(id: string) {
         if (id === "high-score-name") {
           return input;
         }
@@ -154,8 +156,8 @@ describe("overlays", () => {
 
         return null;
       },
-    };
-    const overlays = createOverlayController({ overlayEl, text });
+    } as Document;
+    const overlays = createOverlayController({ overlayEl: overlayEl as never, text });
 
     overlays.showNameEntryScreen(
       { score: 999, level: 7, gems: 44 },

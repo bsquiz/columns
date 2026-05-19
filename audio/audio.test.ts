@@ -17,9 +17,23 @@ describe("audio", () => {
       currentTime: 10,
       state,
       destination: {},
-      oscillators: [],
-      gains: [],
-      filters: [],
+      oscillators: [] as Array<{
+        type: string;
+        frequency: ReturnType<typeof createMockParam>;
+        connect: jest.Mock;
+        start: jest.Mock;
+        stop: jest.Mock;
+      }>,
+      gains: [] as Array<{
+        gain: ReturnType<typeof createMockParam>;
+        connect: jest.Mock;
+      }>,
+      filters: [] as Array<{
+        type: string;
+        frequency: ReturnType<typeof createMockParam>;
+        Q: { value: number };
+        connect: jest.Mock;
+      }>,
       resume: jest.fn().mockResolvedValue(undefined),
       createOscillator: jest.fn(() => {
         const oscillator = {
@@ -55,15 +69,15 @@ describe("audio", () => {
     return context;
   }
 
-  function loadAudioModule(windowValue) {
+  function loadAudioModule(windowValue: { AudioContext: jest.Mock } | null) {
     jest.resetModules();
     if (windowValue) {
-      global.window = windowValue;
+      global.window = windowValue as never;
     } else {
       delete global.window;
     }
 
-    return require("./audio");
+    return require("./audio.ts") as typeof import("./audio");
   }
 
   afterEach(() => {
@@ -82,7 +96,7 @@ describe("audio", () => {
 
   test("starts gameplay music with a mocked audio context and updates mute gain", () => {
     const mockContext = createMockAudioContext({ state: "suspended" });
-    const setTimeoutSpy = jest.spyOn(global, "setTimeout").mockReturnValue(123);
+    const setTimeoutSpy = jest.spyOn(global, "setTimeout").mockReturnValue(123 as never);
     const audio = loadAudioModule({ AudioContext: jest.fn(() => mockContext) });
 
     audio.startGameplayMusic();
@@ -102,7 +116,7 @@ describe("audio", () => {
 
   test("pause and stop gameplay music are safe after starting music", () => {
     const mockContext = createMockAudioContext();
-    jest.spyOn(global, "setTimeout").mockReturnValue(321);
+    jest.spyOn(global, "setTimeout").mockReturnValue(321 as never);
     const clearTimeoutSpy = jest.spyOn(global, "clearTimeout").mockImplementation(() => {});
     const audio = loadAudioModule({ AudioContext: jest.fn(() => mockContext) });
 
@@ -119,7 +133,7 @@ describe("audio", () => {
 
   test("gameplay music alternates between the base and alternate songs", () => {
     const mockContext = createMockAudioContext();
-    jest.spyOn(global, "setTimeout").mockReturnValue(456);
+    jest.spyOn(global, "setTimeout").mockReturnValue(456 as never);
     const audio = loadAudioModule({ AudioContext: jest.fn(() => mockContext) });
 
     audio.startGameplayMusic();

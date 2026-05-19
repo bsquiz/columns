@@ -24,5 +24,6 @@
     "overlays/**/*.ts",
     "gameSession/**/*.ts",
     "input/**/*.ts"
-  ]
+  ],
+  "exclude": ["**/*.test.ts", "dist", "node_modules"]
 }
