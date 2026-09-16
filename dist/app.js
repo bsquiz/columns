@@ -41,6 +41,7 @@
         score: 0,
         level: 1,
         clears: 0,
+        elapsedGameplayMs: 0,
         dropTimer: 0,
         lastTime: 0,
         paused: false,
@@ -126,6 +127,7 @@
       if (!isRunActive()) {
         return;
       }
+      advanceLevelProgress(delta);
       if (state.resolving) {
         state.matchFlash -= delta;
         if (state.matchFlash <= 0) {
@@ -186,14 +188,9 @@
       const { removed } = clearMarkedMatches2(state.board, state.flashMatches);
       state.flashMatches = [];
       if (removed > 0) {
-        const previousLevel = state.level;
         state.clears += removed;
         state.score += getMatchScore(removed, cascadeDepth);
-        state.level = 1 + Math.floor(state.clears / gameConfig.progression.gemsPerLevel);
         notifyHudChange();
-        if (state.level > previousLevel) {
-          onLevelUp == null ? void 0 : onLevelUp();
-        }
       }
       const cascaded = findMatches2(state.board);
       if (cascaded.length > 0) {
@@ -229,6 +226,18 @@
     function notifyHudChange() {
       onHudChange == null ? void 0 : onHudChange(state);
     }
+    function advanceLevelProgress(delta) {
+      if (delta <= 0) {
+        return;
+      }
+      const previousLevel = state.level;
+      state.elapsedGameplayMs += delta;
+      state.level = 1 + Math.floor(state.elapsedGameplayMs / gameConfig.progression.levelDurationMs);
+      if (state.level > previousLevel) {
+        notifyHudChange();
+        onLevelUp == null ? void 0 : onLevelUp();
+      }
+    }
     function notifyPreviewChange() {
       onPreviewChange == null ? void 0 : onPreviewChange(state.next);
     }
@@ -248,6 +257,9 @@
   }
 
   // input/input.ts
+  var GAMEPAD_REPEAT_START_MS = 180;
+  var GAMEPAD_REPEAT_INTERVAL_MS = 90;
+  var GAMEPAD_AXIS_THRESHOLD = 0.55;
   function bindGameInput(options) {
     const {
       onHardDrop,
@@ -261,12 +273,25 @@
       shouldIgnoreTarget,
       target = document
     } = options;
+    const repeatStates = {
+      moveLeft: { active: false, nextTriggerAt: 0 },
+      moveRight: { active: false, nextTriggerAt: 0 },
+      softDrop: { active: false, nextTriggerAt: 0 }
+    };
+    const previousButtons = {
+      hardDrop: false,
+      pause: false,
+      restart: false,
+      rotate: false,
+      start: false
+    };
+    let animationFrameId = 0;
     function handleKeydown(event) {
       if (shouldIgnoreTarget == null ? void 0 : shouldIgnoreTarget(event.target)) {
         return;
       }
       if (onStart && (event.code === "Enter" || event.code === "Space")) {
-        const handledStart = onStart(event);
+        const handledStart = onStart();
         if (handledStart) {
           event.preventDefault();
           return;
@@ -275,37 +300,120 @@
       switch (event.code) {
         case "ArrowLeft":
           event.preventDefault();
-          onMoveLeft == null ? void 0 : onMoveLeft(event);
+          onMoveLeft == null ? void 0 : onMoveLeft();
           break;
         case "ArrowRight":
           event.preventDefault();
-          onMoveRight == null ? void 0 : onMoveRight(event);
+          onMoveRight == null ? void 0 : onMoveRight();
           break;
         case "ArrowUp":
           event.preventDefault();
-          onRotate == null ? void 0 : onRotate(event);
+          onRotate == null ? void 0 : onRotate();
           break;
         case "ArrowDown":
           event.preventDefault();
-          onSoftDrop == null ? void 0 : onSoftDrop(event);
+          onSoftDrop == null ? void 0 : onSoftDrop();
           break;
         case "Space":
           event.preventDefault();
-          onHardDrop == null ? void 0 : onHardDrop(event);
+          onHardDrop == null ? void 0 : onHardDrop();
           break;
         case "KeyP":
-          onPause == null ? void 0 : onPause(event);
+          onPause == null ? void 0 : onPause();
           break;
         case "KeyR":
-          onRestart == null ? void 0 : onRestart(event);
+          onRestart == null ? void 0 : onRestart();
           break;
         default:
           break;
       }
     }
     target.addEventListener("keydown", handleKeydown);
+    function updateRepeatState(now, pressed, state, action) {
+      if (!pressed) {
+        state.active = false;
+        state.nextTriggerAt = 0;
+        return;
+      }
+      if (!state.active) {
+        state.active = true;
+        state.nextTriggerAt = now + GAMEPAD_REPEAT_START_MS;
+        action == null ? void 0 : action();
+        return;
+      }
+      if (now < state.nextTriggerAt) {
+        return;
+      }
+      state.nextTriggerAt = now + GAMEPAD_REPEAT_INTERVAL_MS;
+      action == null ? void 0 : action();
+    }
+    function fireOnRisingEdge(pressed, previous, action) {
+      if (pressed && !previous) {
+        return Boolean(action == null ? void 0 : action());
+      }
+      return false;
+    }
+    function isGamepadButtonPressed(gamepad, buttonIndex) {
+      var _a4;
+      return Boolean((_a4 = gamepad.buttons[buttonIndex]) == null ? void 0 : _a4.pressed);
+    }
+    function getActiveGamepad() {
+      var _a4;
+      if (typeof navigator === "undefined" || typeof navigator.getGamepads !== "function") {
+        return null;
+      }
+      return (_a4 = [...navigator.getGamepads()].find((gamepad) => Boolean(gamepad))) != null ? _a4 : null;
+    }
+    function pollGamepad(timestamp) {
+      var _a4, _b, _c, _d;
+      const activeTarget = typeof document !== "undefined" ? document.activeElement : null;
+      if (shouldIgnoreTarget == null ? void 0 : shouldIgnoreTarget(activeTarget)) {
+        animationFrameId = requestAnimationFrame(pollGamepad);
+        return;
+      }
+      const gamepad = getActiveGamepad();
+      if (gamepad) {
+        const leftPressed = isGamepadButtonPressed(gamepad, 14) || ((_a4 = gamepad.axes[0]) != null ? _a4 : 0) <= -GAMEPAD_AXIS_THRESHOLD;
+        const rightPressed = isGamepadButtonPressed(gamepad, 15) || ((_b = gamepad.axes[0]) != null ? _b : 0) >= GAMEPAD_AXIS_THRESHOLD;
+        const downPressed = isGamepadButtonPressed(gamepad, 13) || ((_c = gamepad.axes[1]) != null ? _c : 0) >= GAMEPAD_AXIS_THRESHOLD;
+        const rotatePressed = isGamepadButtonPressed(gamepad, 0) || isGamepadButtonPressed(gamepad, 12) || ((_d = gamepad.axes[1]) != null ? _d : 0) <= -GAMEPAD_AXIS_THRESHOLD;
+        const hardDropPressed = isGamepadButtonPressed(gamepad, 1) || isGamepadButtonPressed(gamepad, 3);
+        const pausePressed = isGamepadButtonPressed(gamepad, 9);
+        const restartPressed = isGamepadButtonPressed(gamepad, 8);
+        const startPressed = isGamepadButtonPressed(gamepad, 9) || isGamepadButtonPressed(gamepad, 0);
+        updateRepeatState(timestamp, leftPressed, repeatStates.moveLeft, onMoveLeft);
+        updateRepeatState(timestamp, rightPressed, repeatStates.moveRight, onMoveRight);
+        updateRepeatState(timestamp, downPressed, repeatStates.softDrop, onSoftDrop);
+        fireOnRisingEdge(rotatePressed, previousButtons.rotate, onRotate);
+        fireOnRisingEdge(hardDropPressed, previousButtons.hardDrop, onHardDrop);
+        fireOnRisingEdge(pausePressed, previousButtons.pause, onPause);
+        fireOnRisingEdge(restartPressed, previousButtons.restart, onRestart);
+        fireOnRisingEdge(startPressed, previousButtons.start, onStart);
+        previousButtons.rotate = rotatePressed;
+        previousButtons.hardDrop = hardDropPressed;
+        previousButtons.pause = pausePressed;
+        previousButtons.restart = restartPressed;
+        previousButtons.start = startPressed;
+      } else {
+        updateRepeatState(timestamp, false, repeatStates.moveLeft);
+        updateRepeatState(timestamp, false, repeatStates.moveRight);
+        updateRepeatState(timestamp, false, repeatStates.softDrop);
+        previousButtons.rotate = false;
+        previousButtons.hardDrop = false;
+        previousButtons.pause = false;
+        previousButtons.restart = false;
+        previousButtons.start = false;
+      }
+      animationFrameId = requestAnimationFrame(pollGamepad);
+    }
+    if (typeof requestAnimationFrame === "function") {
+      animationFrameId = requestAnimationFrame(pollGamepad);
+    }
     return () => {
       target.removeEventListener("keydown", handleKeydown);
+      if (animationFrameId && typeof cancelAnimationFrame === "function") {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }
 
@@ -336,7 +444,7 @@
       highScoreSaveDelayMs: 300
     },
     progression: {
-      gemsPerLevel: 18
+      levelDurationMs: 6e4
     },
     highScores: {
       storageKey: "columns-gameboy-high-scores",

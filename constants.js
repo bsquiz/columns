@@ -32,9 +32,9 @@ const BOARD = {
 	    gameOverFillDurationMs: 1000,
 	    highScoreSaveDelayMs: 300,
 	  },
-    progression: {
-      gemsPerLevel: 18,
-    },
+  progression: {
+    levelDurationMs: 60000,
+  },
     highScores: {
       storageKey: "columns-gameboy-high-scores",
       maxEntries: 5,

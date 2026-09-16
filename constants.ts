@@ -25,7 +25,7 @@ export const GAME = {
     highScoreSaveDelayMs: 300,
   },
   progression: {
-    gemsPerLevel: 18,
+    levelDurationMs: 60000,
   },
   highScores: {
     storageKey: "columns-gameboy-high-scores",

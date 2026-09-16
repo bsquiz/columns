@@ -19,6 +19,7 @@ export interface GameState {
   score: number;
   level: number;
   clears: number;
+  elapsedGameplayMs: number;
   dropTimer: number;
   lastTime: number;
   paused: boolean;

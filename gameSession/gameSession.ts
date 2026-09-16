@@ -15,7 +15,7 @@ type GameConfig = {
     cascadeBonusPoints: number;
   };
   progression: {
-    gemsPerLevel: number;
+    levelDurationMs: number;
   };
 };
 
@@ -86,6 +86,7 @@ export function createGameSession(options: SessionOptions): GameSessionApi {
       score: 0,
       level: 1,
       clears: 0,
+      elapsedGameplayMs: 0,
       dropTimer: 0,
       lastTime: 0,
       paused: false,
@@ -192,6 +193,8 @@ export function createGameSession(options: SessionOptions): GameSessionApi {
       return;
     }
 
+    advanceLevelProgress(delta);
+
     if (state.resolving) {
       state.matchFlash -= delta;
       if (state.matchFlash <= 0) {
@@ -263,15 +266,9 @@ export function createGameSession(options: SessionOptions): GameSessionApi {
     state.flashMatches = [];
 
     if (removed > 0) {
-      const previousLevel = state.level;
       state.clears += removed;
       state.score += getMatchScore(removed, cascadeDepth);
-      state.level = 1 + Math.floor(state.clears / gameConfig.progression.gemsPerLevel);
       notifyHudChange();
-
-      if (state.level > previousLevel) {
-        onLevelUp?.();
-      }
     }
 
     const cascaded = findMatches(state.board);
@@ -314,6 +311,22 @@ export function createGameSession(options: SessionOptions): GameSessionApi {
 
   function notifyHudChange(): void {
     onHudChange?.(state);
+  }
+
+  function advanceLevelProgress(delta: number): void {
+    if (delta <= 0) {
+      return;
+    }
+
+    const previousLevel = state.level;
+    state.elapsedGameplayMs += delta;
+    state.level =
+      1 + Math.floor(state.elapsedGameplayMs / gameConfig.progression.levelDurationMs);
+
+    if (state.level > previousLevel) {
+      notifyHudChange();
+      onLevelUp?.();
+    }
   }
 
   function notifyPreviewChange(): void {

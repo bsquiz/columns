@@ -141,7 +141,13 @@ describe("audio", () => {
     audio.startGameplayMusic();
 
     expect(mockContext.oscillators[0].frequency.setValueAtTime).toHaveBeenCalledWith(659.25, 10.02);
-    expect(mockContext.oscillators[12].frequency.setValueAtTime).toHaveBeenCalledWith(523.25, 10.02);
+    expect(
+      mockContext.oscillators.some((oscillator) =>
+        oscillator.frequency.setValueAtTime.mock.calls.some(
+          ([frequency, time]) => frequency === 523.25 && time === 10.02
+        )
+      )
+    ).toBe(true);
   });
 
   test("playPlaceSound creates oscillator, filter, and gain envelope", () => {

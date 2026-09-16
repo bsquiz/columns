@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gem Columns</title>
     <link rel="stylesheet" href="./gameboy.css" />
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="../nav.css">
+
   </head>
   <body>
+    <div id="mainNavTarget"></div>
+
     <main class="layout d-grid">
-      <section class="cabinet d-grid panel border box-shadow d-grid">
+      <section class="cabinet d-grid panel border d-grid">
         <section class="hud d-flex">
           <div class="stats d-grid">
-            <div class="stat inset border box-shadow d-flex">
+            <div class="stat inset border d-flex">
               <span class="label text-m">Score</span>
               <strong id="score" class="text-m dark">0</strong>
             </div>
-            <div class="stat inset border box-shadow d-flex">
+            <div class="stat inset border d-flex">
               <span class="label text-m">Level</span>
               <strong id="level" class="text-m dark">1</strong>
             </div>
-            <div class="stat inset border box-shadow d-flex">
+            <div class="stat inset border d-flex">
               <span class="label text-m">Gems</span>
               <strong id="clears" class="text-m dark">0</strong>
             </div>
           </div>
 
-          <div class="preview inset border box-shadow">
+          <div class="preview inset border">
             <span class="label text-m">Next</span>
             <div
               id="next-piece"
@@ -37,7 +42,7 @@
 
         <section class="board-shell d-grid p-relative">
           <canvas
-            class="box-shadow d-block p-relative"
+            class="d-block p-relative"
             id="game"
             width="360"
             height="780"
@@ -47,7 +52,7 @@
         </section>
 
         <section class="hud d-flex">
-          <div class="controls inset border box-shadow">
+          <div class="controls inset border">
             <span class="label text-m">Controls</span>
             <ul class="d-grid">
               <li><span class="control-keys"><kbd>←</kbd><kbd>→</kbd></span><span class="control-action">Move</span></li>
@@ -59,7 +64,7 @@
             </ul>
             <button
               id="music-toggle"
-              class="music-toggle overlay-button box-shadow"
+              class="music-toggle overlay-button"
               type="button"
             >
               Mute Music
@@ -69,6 +74,7 @@
       </section>
     </main>
 
+    <script type="text/javascript" src="../nav.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
